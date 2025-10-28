@@ -49,15 +49,15 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white relative overflow-hidden">
+      {/* NAVBAR */}
+      <header className="bg-white shadow-sm relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <svg
               className="h-8 w-8 text-blue-600"
               viewBox="0 0 24 24"
               fill="currentColor"
-              aria-hidden="true"
             >
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
@@ -71,13 +71,13 @@ const Dashboard = () => {
             </span>
             <Link
               to="/user/tickets"
-              className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition"
             >
               Manage Tickets
             </Link>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="px-4 py-2 rounded-md text-sm font-medium text-blue-600 border border-blue-600 bg-white hover:bg-blue-50 transition"
             >
               Logout
             </button>
@@ -85,152 +85,118 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">Dashboard</h1>
+      {/* WAVE BACKGROUND */}
+      <div className="absolute top-0 left-0 w-full z-0 opacity-70">
+        <svg
+          viewBox="0 0 1440 320"
+          className="w-full h-auto"
+          preserveAspectRatio="none"
+        >
+          <path
+            fill="#3b82f6"
+            fillOpacity="0.1"
+            d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+          />
+        </svg>
+      </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+          Dashboard Overview
+        </h1>
+
+        {/* STATS */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-12">
           {stats.map((stat) => (
             <div
               key={stat.name}
-              className="bg-white overflow-hidden shadow rounded-lg"
+              className="bg-white p-6 rounded-xl shadow-md border border-blue-100 hover:shadow-lg transition"
             >
-              <div className="px-4 py-5 sm:p-6">
-                <div className="flex items-center">
-                  <div className="shrink-0 bg-blue-500 rounded-md p-3">
-                    <svg
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                      />
-                    </svg>
-                  </div>
-                  <div className="ml-5 w-0 flex-1">
-                    <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">
-                        {stat.name}
-                      </dt>
-                      <dd className="flex items-baseline">
-                        <div className="text-2xl font-semibold text-gray-900">
-                          {stat.value}
-                        </div>
-                        <div
-                          className={`ml-2 flex items-baseline text-sm font-semibold ${
-                            stat.changeType === "increase"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {stat.changeType === "increase" ? (
-                            <svg
-                              className="self-center shrink-0 h-5 w-5 text-green-500"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          ) : (
-                            <svg
-                              className="self-center shrink-0 h-5 w-5 text-red-500"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
-                          <span className="sr-only">
-                            {stat.changeType === "increase"
-                              ? "Increased"
-                              : "Decreased"}{" "}
-                            by
-                          </span>
-                          {stat.change}
-                        </div>
-                      </dd>
-                    </dl>
-                  </div>
+              <div className="flex items-center">
+                <div className="bg-blue-100 rounded-lg p-3">
+                  <svg
+                    className="h-6 w-6 text-blue-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm text-gray-600">{stat.name}</p>
+                  <p className="text-2xl font-semibold text-gray-900">
+                    {stat.value}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
-            <h2 className="text-lg leading-6 font-medium text-gray-900">
-              Recent Activity
-            </h2>
+        {/* RECENT ACTIVITY */}
+        <div className="bg-white shadow-lg rounded-xl border border-blue-100 overflow-hidden">
+          <div className="px-6 py-5 border-b border-blue-100 flex justify-between items-center">
+            <h2 className="text-lg font-bold text-gray-900">Recent Activity</h2>
             <Link
               to="/user/tickets"
-              className="text-sm font-medium text-blue-600 hover:text-blue-500"
+              className="text-sm font-medium text-blue-600 hover:text-blue-700"
             >
               View all
             </Link>
           </div>
-          <div className="bg-white overflow-hidden">
-            <ul className="divide-y divide-gray-200">
-              {tickets.slice(0, 5).map((ticket) => (
-                <li key={ticket.id} className="px-6 py-4">
-                  <div className="flex items-center">
-                    <div className="shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                      <svg
-                        className="h-6 w-6 text-blue-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d={
-                            ticket.status === "closed"
-                              ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                              : "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                          }
-                        />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900">
-                        Ticket #{ticket.id.slice(-4)}{" "}
-                        {ticket.status === "closed"
-                          ? "has been resolved"
-                          : ticket.status === "in_progress"
-                          ? "is in progress"
-                          : "has been created"}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {new Date(ticket.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-              {tickets.length === 0 && (
-                <li className="px-6 py-4 text-center text-gray-500">
-                  No recent activity
-                </li>
-              )}
-            </ul>
-          </div>
+
+          <ul className="divide-y divide-blue-50">
+            {tickets.slice(0, 5).map((ticket) => (
+              <li key={ticket.id} className="px-6 py-4 flex items-center">
+                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <svg
+                    className="h-6 w-6 text-blue-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d={
+                        ticket.status === "closed"
+                          ? "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          : "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      }
+                    />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-900">
+                    Ticket #{ticket.id.slice(-4)}{" "}
+                    {ticket.status === "closed"
+                      ? "has been resolved"
+                      : ticket.status === "in_progress"
+                      ? "is in progress"
+                      : "has been created"}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {new Date(ticket.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              </li>
+            ))}
+
+            {tickets.length === 0 && (
+              <li className="px-6 py-8 text-center text-gray-500">
+                No recent activity
+              </li>
+            )}
+          </ul>
         </div>
+
         <Footer />
       </main>
     </div>

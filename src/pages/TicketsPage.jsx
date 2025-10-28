@@ -16,6 +16,7 @@ const TicketsPage = () => {
     deleteTicket,
     getFilteredTickets,
   } = useTickets();
+
   const [filter, setFilter] = useState("all");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTicket, setEditingTicket] = useState(null);
@@ -23,24 +24,44 @@ const TicketsPage = () => {
   const filteredTickets = getFilteredTickets(filter);
 
   const handleCreateTicket = async (ticketData) => {
-    await createTicket(ticketData);
-    setIsFormOpen(false);
+    try {
+      await createTicket(ticketData);
+      setIsFormOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleUpdateTicket = async (ticketData) => {
-    const updatedTicket = { ...editingTicket, ...ticketData };
-    await updateTicket(updatedTicket);
-    setEditingTicket(null);
-    setIsFormOpen(false);
+    try {
+      const updatedTicket = { ...editingTicket, ...ticketData };
+      await updateTicket(updatedTicket);
+      setEditingTicket(null);
+      setIsFormOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleDeleteTicket = async (ticketId) => {
-    await deleteTicket(ticketId);
+    try {
+      await deleteTicket(ticketId);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleEditClick = (ticket) => {
     setEditingTicket(ticket);
     setIsFormOpen(true);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error(error?.message || "Logout failed");
+    }
   };
 
   if (loading) {
@@ -65,7 +86,7 @@ const TicketsPage = () => {
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
             <span className="ml-2 text-xl font-bold text-gray-900">
-              TicketDash
+              TicketApp
             </span>
           </div>
           <div className="flex items-center space-x-4">
@@ -79,7 +100,7 @@ const TicketsPage = () => {
               Dashboard
             </Link>
             <button
-              onClick={() => logout()}
+              onClick={handleLogout}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Logout
@@ -121,7 +142,7 @@ const TicketsPage = () => {
             id="status-filter"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="mt-1 block w-full md:w-70 border  pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+            className="mt-1 block w-full md:w-70 border pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
           >
             <option value="all">All Tickets</option>
             <option value="open">Open</option>
@@ -131,7 +152,7 @@ const TicketsPage = () => {
         </div>
 
         {isFormOpen && (
-          <div className="fixed inset-0 bg-gray-500/50  flex items-center justify-center p-4 z-50">
+          <div className="fixed inset-0 bg-gray-500/50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
               <h2 className="text-xl font-semibold mb-4">
                 {editingTicket ? "Edit Ticket" : "Create New Ticket"}

@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 const Signup = () => {
   const navigate = useNavigate();
   const { signup } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -32,7 +33,7 @@ const Signup = () => {
       toast.success("Account created successfully!");
       navigate("/user/dashboard");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
@@ -45,6 +46,7 @@ const Signup = () => {
         >
           Back
         </button>
+
         <div className="flex items-center justify-center h-10">
           <div className="shrink-0 flex items-center">
             <svg
@@ -56,10 +58,11 @@ const Signup = () => {
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
             <span className="ml-2 text-xl font-bold text-gray-900">
-              TicketDash
+              TicketApp
             </span>
           </div>
         </div>
+
         <div>
           <h2 className=" text-center text-3xl font-extrabold text-gray-900">
             Welcome
@@ -72,9 +75,6 @@ const Signup = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="rounded-md  space-y-4">
             <div>
-              <label htmlFor="name" className="sr-only">
-                Full Name
-              </label>
               <input
                 id="name"
                 type="text"
@@ -92,9 +92,6 @@ const Signup = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
               <input
                 id="email"
                 type="email"
@@ -112,9 +109,6 @@ const Signup = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
               <input
                 id="password"
                 type="password"
@@ -132,9 +126,6 @@ const Signup = () => {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="sr-only">
-                Confirm Password
-              </label>
               <input
                 id="confirmPassword"
                 type="password"
