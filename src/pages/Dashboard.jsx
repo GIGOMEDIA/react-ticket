@@ -62,7 +62,7 @@ const Dashboard = () => {
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
             <span className="ml-2 text-xl font-bold text-gray-900">
-              TicketDash
+              TicketApp 
             </span>
           </div>
           <div className="flex items-center space-x-4">
